@@ -15,14 +15,16 @@ Standard LLM chat interfaces suffer from:
 This framework solves all four problems with a simple, file-based architecture:
 
 ```
+├── INIT.md                  # Initialization protocol for new forks
 ├── AGENTS.md                # Agent identity, behavior rules, and context loading
+├── .agents/                 # Harness-specific directory (or .claude/)
+│   ├── rules/               # Behavioral constraints (accumulated over time)
+│   └── skills/              # Horizontal capabilities (added without rewriting core)
 ├── context/                 # Living knowledge base (updated as things change)
 │   ├── me.md                # Who the agent serves
 │   ├── work.md              # Current work context
 │   ├── goals.md             # Active objectives
 │   └── current-priorities.md # What matters right now
-├── rules/                   # Behavioral constraints (accumulated over time)
-├── skills/                  # Horizontal capabilities (added without rewriting core)
 ├── tools/                   # Deterministic scripts the agent can execute
 ├── decisions/               # Decision log with reasoning trail
 │   └── log.md               # [DATE] DECISION: ... | REASONING: ...
@@ -37,7 +39,7 @@ This framework solves all four problems with a simple, file-based architecture:
 Context files are read at the start of every session. The agent updates them as things change. No conversation history needed — the filesystem *is* the memory.
 
 ### 2. Horizontal Skill Growth
-New capabilities are added as markdown files in `skills/`. Each skill is a self-contained instruction set that the agent can invoke. The agent grows broader without getting deeper (avoiding context window bloat).
+New capabilities are added as markdown files in `.agents/skills/`. Each skill is a self-contained instruction set that the agent can invoke. The agent grows broader without getting deeper (avoiding context window bloat).
 
 ### 3. Engine-Agnostic
 This structure works with **any** LLM-powered IDE or agent framework:
@@ -56,11 +58,9 @@ Every significant decision is logged in `decisions/log.md` with explicit reasoni
 ## Getting Started
 
 1. Fork this repo
-2. Edit `AGENTS.md` to define your agent's identity and purpose
-3. Populate `context/` with your specific domain knowledge
-4. Add rules as you discover preferences: `rules/communication-style.md`, etc.
-5. Build skills organically as recurring workflows emerge
-6. Add deterministic tools for anything that needs guaranteed accuracy
+2. Open your AI agent (Claude Code, Cursor, Antigravity, Gemini, etc.) in the project root.
+3. Tell your agent: **"Read INIT.md and begin onboarding"**
+4. The agent will interview you and automatically configure the workspace to your exact needs.
 
 ## Real-World Usage
 
